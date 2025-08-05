@@ -32,15 +32,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 animation: floatUpEnhanced ${duration}s ease-out forwards;
                 opacity: 0.8;
                 filter: drop-shadow(0 2px 4px rgba(232, 165, 199, 0.3));
+                pointer-events: auto;
+                cursor: pointer;
+                transition: transform 0.1s ease;
             `;
             
             // Add custom drift animation
             rabbitElement.style.setProperty('--drift', `${drift}px`);
             
+            // Add game interaction
+            rabbitElement.classList.add('catchable-emoji');
+            rabbitElement.dataset.emojiType = element;
+            rabbitElement.addEventListener('click', handleEmojiCatch);
+            rabbitElement.addEventListener('touchstart', handleEmojiCatch);
+            
+            // Add hover effect for desktop
+            rabbitElement.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.2)';
+            });
+            
+            rabbitElement.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+            
             rabbitsContainer.appendChild(rabbitElement);
             
             setTimeout(() => {
-                rabbitElement.remove();
+                if (rabbitElement.parentNode) {
+                    rabbitElement.remove();
+                }
             }, duration * 1000 + 500);
         }
 
@@ -104,6 +124,270 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize floating rabbits
     createFloatingRabbits();
+
+    // Game variables
+    let gameScore = 0;
+    let gameActive = true;
+    let comboCount = 0;
+    let lastCatchTime = 0;
+
+    // Create score display
+    function createScoreDisplay() {
+        const scoreDisplay = document.createElement('div');
+        scoreDisplay.id = 'game-score';
+        scoreDisplay.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, rgba(255, 182, 217, 0.95), rgba(255, 145, 199, 0.95));
+            color: white;
+            padding: 12px 18px;
+            border-radius: 25px;
+            font-family: 'Gamja Flower', 'Jua', cursive;
+            font-weight: 400;
+            font-size: 16px;
+            z-index: 1001;
+            box-shadow: 0 8px 25px rgba(232, 165, 199, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(15px);
+            animation: scoreGlow 2s ease-in-out infinite;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        `;
+        scoreDisplay.innerHTML = '🎮 Score: 0';
+        document.body.appendChild(scoreDisplay);
+        return scoreDisplay;
+    }
+
+    const scoreDisplay = createScoreDisplay();
+
+    // Handle emoji catch with fantastic effects
+    function handleEmojiCatch(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const emoji = e.target;
+        const emojiType = emoji.dataset.emojiType;
+        const rect = emoji.getBoundingClientRect();
+        const currentTime = Date.now();
+        
+        // Update score and combo
+        gameScore += 10;
+        if (currentTime - lastCatchTime < 2000) {
+            comboCount++;
+            gameScore += comboCount * 5;
+        } else {
+            comboCount = 0;
+        }
+        lastCatchTime = currentTime;
+        
+        // Update score display
+        scoreDisplay.innerHTML = `🎮 Score: ${gameScore}${comboCount > 0 ? ` 🔥x${comboCount + 1}` : ''}`;
+        
+        // Check for achievements
+        const previousScore = gameScore - (10 + (comboCount * 5));
+        if ((previousScore < 100 && gameScore >= 100) || 
+            (previousScore < 200 && gameScore >= 200) || 
+            (previousScore < 500 && gameScore >= 500)) {
+            setTimeout(() => checkForAchievements(), 500);
+        }
+        
+        // Create fantastic explosion effect
+        createCatchExplosion(rect.left + rect.width/2, rect.top + rect.height/2, emojiType);
+        
+        // Remove the caught emoji immediately
+        emoji.remove();
+        
+        // Show score popup
+        showScorePopup(rect.left + rect.width/2, rect.top + rect.height/2, comboCount);
+        
+        // Create visual sound wave effect
+        createSoundWave(rect.left + rect.width/2, rect.top + rect.height/2, comboCount);
+    }
+
+    // Create fantastic explosion effect
+    function createCatchExplosion(x, y, emojiType) {
+        const effectElements = getEffectElements(emojiType);
+        const particleCount = 15 + (comboCount * 5);
+        
+        for (let i = 0; i < particleCount; i++) {
+            setTimeout(() => {
+                const particle = document.createElement('div');
+                particle.innerHTML = effectElements[Math.floor(Math.random() * effectElements.length)];
+                
+                const angle = (i / particleCount) * 2 * Math.PI;
+                const velocity = 100 + Math.random() * 50;
+                const size = 12 + Math.random() * 15;
+                
+                particle.style.cssText = `
+                    position: fixed;
+                    left: ${x}px;
+                    top: ${y}px;
+                    font-size: ${size}px;
+                    pointer-events: none;
+                    z-index: 1002;
+                    animation: fantasyExplosion 2s ease-out forwards;
+                    transform-origin: center;
+                `;
+                
+                particle.style.setProperty('--angle', `${angle}rad`);
+                particle.style.setProperty('--velocity', `${velocity}px`);
+                particle.style.setProperty('--rotation', `${Math.random() * 720}deg`);
+                
+                document.body.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 2000);
+            }, i * 20);
+        }
+        
+        // Create ring wave effect
+        createRingWave(x, y, emojiType);
+    }
+
+    // Get special effect elements based on emoji type
+    function getEffectElements(emojiType) {
+        const effects = {
+            '🐰': ['✨', '🌟', '💫', '⭐', '🎊', '🎉'],
+            '🥕': ['🌱', '🍃', '✨', '💚', '🌿', '🌟'],
+            '🦋': ['✨', '🌸', '💎', '🌟', '💫', '🦋'],
+            '🌸': ['🌺', '🌸', '💮', '🌷', '✨', '💗'],
+            '💖': ['💕', '💓', '💗', '💖', '✨', '🌟']
+        };
+        return effects[emojiType] || ['✨', '🌟', '💫'];
+    }
+
+    // Create ring wave effect
+    function createRingWave(x, y, emojiType) {
+        const colors = {
+            '🐰': 'rgba(255, 182, 217, 0.6)',
+            '🥕': 'rgba(255, 165, 0, 0.6)',
+            '🦋': 'rgba(138, 43, 226, 0.6)',
+            '🌸': 'rgba(255, 192, 203, 0.6)',
+            '💖': 'rgba(255, 20, 147, 0.6)'
+        };
+        
+        const ring = document.createElement('div');
+        ring.style.cssText = `
+            position: fixed;
+            left: ${x}px;
+            top: ${y}px;
+            width: 10px;
+            height: 10px;
+            border: 3px solid ${colors[emojiType] || 'rgba(255, 182, 217, 0.6)'};
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1001;
+            animation: ringExpand 1s ease-out forwards;
+            transform: translate(-50%, -50%);
+        `;
+        
+        document.body.appendChild(ring);
+        setTimeout(() => ring.remove(), 1000);
+    }
+
+    // Show score popup
+    function showScorePopup(x, y, combo) {
+        const popup = document.createElement('div');
+        const points = 10 + (combo * 5);
+        popup.innerHTML = combo > 0 ? `+${points} 🔥COMBO x${combo + 1}!` : `+${points}`;
+        popup.style.cssText = `
+            position: fixed;
+            left: ${x}px;
+            top: ${y}px;
+            color: ${combo > 0 ? '#ff1493' : '#d63384'};
+            font-weight: bold;
+            font-size: ${combo > 0 ? '18px' : '14px'};
+            pointer-events: none;
+            z-index: 1003;
+            animation: scoreFloat 2s ease-out forwards;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            transform: translate(-50%, -50%);
+        `;
+        
+        document.body.appendChild(popup);
+        setTimeout(() => popup.remove(), 2000);
+    }
+
+    // Create visual sound wave effect
+    function createSoundWave(x, y, combo) {
+        const intensity = combo > 0 ? 3 : 1;
+        for (let i = 0; i < intensity; i++) {
+            setTimeout(() => {
+                const wave = document.createElement('div');
+                wave.style.cssText = `
+                    position: fixed;
+                    left: ${x}px;
+                    top: ${y}px;
+                    width: 20px;
+                    height: 20px;
+                    border: 2px solid ${combo > 0 ? '#ff1493' : '#ffb6d9'};
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 1001;
+                    animation: soundWave ${0.8 + i * 0.2}s ease-out forwards;
+                    transform: translate(-50%, -50%);
+                    opacity: ${1 - i * 0.3};
+                `;
+                
+                document.body.appendChild(wave);
+                setTimeout(() => wave.remove(), 1000 + i * 200);
+            }, i * 100);
+        }
+    }
+
+    // Add achievement celebrations for high scores
+    function checkForAchievements() {
+        if (gameScore >= 100 && gameScore < 200) {
+            showAchievement('🌟 Party Starter!', 'rgba(255, 215, 0, 0.9)');
+        } else if (gameScore >= 200 && gameScore < 500) {
+            showAchievement('🎉 Celebration Master!', 'rgba(255, 105, 180, 0.9)');
+        } else if (gameScore >= 500) {
+            showAchievement('👑 Birthday Legend!', 'rgba(148, 0, 211, 0.9)');
+        }
+    }
+
+    function showAchievement(text, color) {
+        const achievement = document.createElement('div');
+        achievement.innerHTML = text;
+        achievement.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: ${color};
+            color: white;
+            padding: 20px 30px;
+            border-radius: 25px;
+            font-size: 20px;
+            font-weight: bold;
+            z-index: 1004;
+            animation: achievementShow 3s ease-out forwards;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        `;
+        
+        document.body.appendChild(achievement);
+        
+        // Create celebration burst
+        for (let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                const confetti = document.createElement('div');
+                confetti.innerHTML = ['🎊', '🎉', '✨', '🌟'][Math.floor(Math.random() * 4)];
+                confetti.style.cssText = `
+                    position: fixed;
+                    left: ${window.innerWidth / 2 + (Math.random() - 0.5) * 200}px;
+                    top: ${window.innerHeight / 2 + (Math.random() - 0.5) * 200}px;
+                    font-size: 25px;
+                    pointer-events: none;
+                    z-index: 1003;
+                    animation: confettiFall 3s ease-out forwards;
+                `;
+                
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3000);
+            }, i * 50);
+        }
+        
+        setTimeout(() => achievement.remove(), 3000);
+    }
 
     // Add enhanced click interaction to plan items
     const planItems = document.querySelectorAll('.plan-item');
@@ -211,6 +495,115 @@ document.addEventListener('DOMContentLoaded', function() {
                 box-shadow: 0 6px 16px rgba(232, 165, 199, 0.4);
             }
         }
+
+        /* Game effect animations */
+        @keyframes fantasyExplosion {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            20% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2) rotate(var(--rotation, 180deg));
+            }
+            100% {
+                transform: translate(
+                    calc(-50% + cos(var(--angle, 0)) * var(--velocity, 100px)), 
+                    calc(-50% + sin(var(--angle, 0)) * var(--velocity, 100px))
+                ) scale(0.3) rotate(var(--rotation, 360deg));
+                opacity: 0;
+            }
+        }
+
+        @keyframes ringExpand {
+            0% {
+                width: 10px;
+                height: 10px;
+                opacity: 1;
+            }
+            100% {
+                width: 200px;
+                height: 200px;
+                opacity: 0;
+            }
+        }
+
+        @keyframes scoreFloat {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+            }
+            20% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -150%) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        @keyframes scoreGlow {
+            0%, 100% {
+                box-shadow: 0 4px 12px rgba(232, 165, 199, 0.4);
+            }
+            50% {
+                box-shadow: 0 6px 20px rgba(255, 20, 147, 0.6);
+            }
+        }
+
+        .catchable-emoji:hover {
+            animation-play-state: paused !important;
+            transform: scale(1.3) !important;
+            filter: drop-shadow(0 0 10px rgba(255, 182, 217, 0.8)) !important;
+        }
+
+        .catchable-emoji:active {
+            transform: scale(0.9) !important;
+        }
+
+        @keyframes soundWave {
+            0% {
+                width: 20px;
+                height: 20px;
+                opacity: 0.8;
+            }
+            100% {
+                width: 100px;
+                height: 100px;
+                opacity: 0;
+            }
+        }
+
+        @keyframes achievementShow {
+            0% {
+                transform: translate(-50%, -50%) scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            20% {
+                transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
+                opacity: 1;
+            }
+            80% {
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -70%) scale(0.8) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(200px) rotate(720deg);
+                opacity: 0;
+            }
+        }
     `;
     document.head.appendChild(sparkleStyle);
 
@@ -252,50 +645,44 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCountdown();
     setInterval(updateCountdown, 3600000);
 
-    // Add hover effects to rabbit decorations (enhanced for mobile)
-    const rabbitDecorations = document.querySelectorAll('.rabbit-ears, .carrot');
-    rabbitDecorations.forEach(decoration => {
-        // Mouse events for desktop
-        decoration.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.3) rotate(15deg)';
-            this.style.transition = 'transform 0.3s ease';
-        });
-        
-        decoration.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1) rotate(0deg)';
-        });
-        
-        // Touch events for mobile
-        decoration.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            this.style.transform = 'scale(1.3) rotate(15deg)';
-            this.style.transition = 'transform 0.3s ease';
+    // Add interaction to main rabbit
+    const mainRabbit = document.querySelector('.main-rabbit');
+    if (mainRabbit) {
+        mainRabbit.addEventListener('click', function() {
+            // Create celebration burst around the rabbit
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const celebration = document.createElement('div');
+                    celebration.innerHTML = ['🥕', '✨', '🌟', '💖', '🌸'][Math.floor(Math.random() * 5)];
+                    celebration.style.cssText = `
+                        position: absolute;
+                        font-size: 25px;
+                        pointer-events: none;
+                        animation: rabbitCelebration 2s ease-out forwards;
+                        z-index: 1000;
+                    `;
+                    
+                    const rect = this.getBoundingClientRect();
+                    const angle = (i / 12) * 2 * Math.PI;
+                    const radius = 60;
+                    celebration.style.left = (rect.left + rect.width/2 + Math.cos(angle) * radius) + 'px';
+                    celebration.style.top = (rect.top + rect.height/2 + Math.sin(angle) * radius) + 'px';
+                    
+                    document.body.appendChild(celebration);
+                    setTimeout(() => celebration.remove(), 2000);
+                }, i * 80);
+            }
             
-            // Create touch sparkle
-            const sparkle = document.createElement('div');
-            sparkle.innerHTML = '✨';
-            sparkle.style.cssText = `
-                position: absolute;
-                font-size: 16px;
-                pointer-events: none;
-                animation: touchSparkle 1s ease-out forwards;
-                z-index: 1000;
-            `;
+            // Add bounce effect to rabbit
+            this.style.animation = 'none';
+            this.offsetHeight; // Trigger reflow
+            this.style.animation = 'mainRabbitFloat 3s ease-in-out infinite, rabbitBounce 0.6s ease-out';
             
-            const rect = this.getBoundingClientRect();
-            sparkle.style.left = (rect.left + rect.width / 2) + 'px';
-            sparkle.style.top = (rect.top + rect.height / 2) + 'px';
-            
-            document.body.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 1000);
-        });
-        
-        decoration.addEventListener('touchend', function() {
             setTimeout(() => {
-                this.style.transform = 'scale(1) rotate(0deg)';
-            }, 200);
+                this.style.animation = 'mainRabbitFloat 3s ease-in-out infinite';
+            }, 600);
         });
-    });
+    }
     
     // Add touch sparkle animation
     const touchSparkleStyle = document.createElement('style');

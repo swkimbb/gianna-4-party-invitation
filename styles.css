@@ -5,102 +5,127 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Jua', 'Gowun Dodum', 'Cute Font', cursive, sans-serif;
     background: linear-gradient(135deg, #ffe8f0, #ffebf4, #fff0f6, #fff5f8);
     min-height: 100vh;
     padding: 20px;
     animation: backgroundShift 10s ease-in-out infinite alternate;
     position: relative;
+    font-size: 18px;
+    line-height: 1.6;
 }
 
 @keyframes backgroundShift {
     0% { background: linear-gradient(135deg, #ffe8f0, #ffebf4, #fff0f6, #fff5f8); }
+    50% { background: linear-gradient(135deg, #fff0f6, #fff5f8, #ffe8f0, #ffebf4); }
     100% { background: linear-gradient(135deg, #ffebf4, #fff0f6, #fff5f8, #ffe8f0); }
 }
 
 .invitation-container {
-    max-width: 600px;
+    max-width: 700px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 30px;
+    box-shadow: 0 25px 50px rgba(232, 165, 199, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.5);
     overflow: hidden;
     position: relative;
-    border: 3px solid #e8a5c7;
+    border: none;
+    backdrop-filter: blur(20px);
 }
 
 .header {
-    background: linear-gradient(135deg, #ffb6d9, #ffc7e0);
-    padding: 30px 20px;
+    background: linear-gradient(135deg, #ff91c7, #ffb3d4, #ffd4e7);
+    padding: 40px 30px;
     text-align: center;
     position: relative;
+    box-shadow: 0 10px 30px rgba(255, 145, 199, 0.4);
 }
 
-.rabbit-decorations {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    font-size: 2em;
+.main-rabbit {
+    font-size: 4em;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: mainRabbitFloat 3s ease-in-out infinite;
+    filter: drop-shadow(0 8px 16px rgba(232, 165, 199, 0.5));
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.rabbit-ears {
-    animation: rabbitHop 2s ease-in-out infinite;
+@keyframes mainRabbitFloat {
+    0%, 100% { 
+        transform: translateY(0px) rotate(0deg) scale(1); 
+    }
+    33% { 
+        transform: translateY(-8px) rotate(2deg) scale(1.05); 
+    }
+    66% { 
+        transform: translateY(-4px) rotate(-1deg) scale(1.02); 
+    }
 }
 
-.carrot {
-    animation: carrotWiggle 1.5s ease-in-out infinite;
-}
-
-.rabbit-ears:first-child {
-    animation-delay: -0.5s;
-}
-
-.rabbit-ears:last-child {
-    animation-delay: -1s;
-}
-
-.carrot:first-child {
-    animation-delay: -0.3s;
-}
-
-.carrot:last-child {
-    animation-delay: -0.8s;
-}
-
-@keyframes rabbitHop {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-15px) rotate(5deg); }
-}
-
-@keyframes carrotWiggle {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(3deg); }
-    75% { transform: rotate(-3deg); }
+.main-rabbit:hover {
+    transform: scale(1.1) !important;
+    animation-play-state: paused;
+    filter: drop-shadow(0 12px 24px rgba(232, 165, 199, 0.7));
 }
 
 .title {
-    font-size: 1.8em;
+    font-family: 'Gamja Flower', 'Jua', cursive;
+    font-size: 2.2em;
     color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    margin: 15px 0;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.8);
+    margin: 0;
     animation: titleGlow 2s ease-in-out infinite alternate;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
 }
 
 @keyframes titleGlow {
-    0% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
-    100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.5); }
+    0% { 
+        text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.8); 
+    }
+    100% { 
+        text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 182, 217, 0.6); 
+    }
 }
 
 .content {
-    padding: 30px;
+    padding: 40px 35px;
 }
 
 .greeting {
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 1.1em;
-    line-height: 1.6;
-    color: #444;
+    margin-bottom: 40px;
+    font-size: 1.4em;
+    line-height: 1.8;
+    color: #555;
+    font-family: 'Gowun Dodum', sans-serif;
+    font-weight: 500;
+}
+
+.game-guide {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 182, 217, 0.1));
+    border-radius: 20px;
+    border: 2px dashed #ffb6d9;
+    animation: gameGuidePulse 3s ease-in-out infinite;
+}
+
+.game-guide-icon {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    animation: gameIconBounce 2s ease-in-out infinite;
+}
+
+.game-guide p {
+    font-family: 'Gamja Flower', 'Jua', cursive;
+    font-size: 1.2em;
+    color: #d63384;
+    margin: 8px 0;
+    text-shadow: 1px 1px 2px rgba(214, 51, 132, 0.2);
 }
 
 .details-section {
@@ -109,23 +134,29 @@ body {
 
 .detail-item {
     display: flex;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    padding: 15px;
-    background: rgba(255, 240, 248, 0.7);
-    border-radius: 10px;
-    border-left: 4px solid #e8a5c7;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(255, 240, 248, 0.8), rgba(255, 235, 244, 0.9));
+    border-radius: 18px;
+    border: none;
+    box-shadow: 0 8px 25px rgba(232, 165, 199, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    text-align: left;
 }
 
 .icon {
-    font-size: 1.5em;
-    margin-right: 15px;
+    font-size: 1.8em;
+    margin-right: 20px;
     flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(232, 165, 199, 0.3));
 }
 
 .detail-content {
     flex: 1;
-    line-height: 1.5;
+    line-height: 1.7;
+    font-size: 1.1em;
+    font-family: 'Gowun Dodum', sans-serif;
 }
 
 .map-link {
@@ -145,11 +176,14 @@ body {
 }
 
 .section-title {
-    font-size: 1.3em;
-    font-weight: bold;
+    font-family: 'Gamja Flower', 'Jua', cursive;
+    font-size: 1.8em;
+    font-weight: 400;
     color: #d63384;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
     text-align: center;
+    text-shadow: 1px 1px 3px rgba(214, 51, 132, 0.3);
+    letter-spacing: 0.5px;
 }
 
 .plan-section {
@@ -172,34 +206,42 @@ body {
     display: flex;
     align-items: center;
     width: 100%;
-    background: linear-gradient(135deg, #ffe8f5, #fff0f8);
-    border-radius: 15px;
-    padding: 15px 20px;
-    border: 2px solid #e8a5c7;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: linear-gradient(135deg, #ffe8f5, #fff0f8, #fff5fa);
+    border-radius: 20px;
+    padding: 20px 25px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(232, 165, 199, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.6);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
+    backdrop-filter: blur(10px);
 }
 
 .plan-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(232, 165, 199, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.detail-item:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 12px 35px rgba(232, 165, 199, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 .plan-number {
-    background: linear-gradient(135deg, #e8a5c7, #ffb6d9);
+    background: linear-gradient(135deg, #e8a5c7, #ffb6d9, #ffc7e0);
     color: white;
-    width: 35px;
-    height: 35px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    font-size: 1.1em;
-    margin-right: 15px;
+    font-family: 'Jua', cursive;
+    font-weight: 400;
+    font-size: 1.3em;
+    margin-right: 20px;
     flex-shrink: 0;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 15px rgba(232, 165, 199, 0.4);
 }
 
 .plan-content {
@@ -209,16 +251,19 @@ body {
 }
 
 .plan-icon {
-    font-size: 1.8em;
-    margin-right: 15px;
+    font-size: 2.2em;
+    margin-right: 20px;
     flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(232, 165, 199, 0.3));
 }
 
 .plan-text {
-    font-weight: bold;
+    font-family: 'Gamja Flower', 'Jua', cursive;
+    font-weight: 400;
     color: #b02a5b;
-    font-size: 1.1em;
-    line-height: 1.3;
+    font-size: 1.3em;
+    line-height: 1.4;
+    text-shadow: 1px 1px 2px rgba(176, 42, 91, 0.2);
 }
 
 .plan-connector {
@@ -254,31 +299,39 @@ body {
 }
 
 .preparation-section {
-    background: rgba(255, 230, 245, 0.7);
-    padding: 20px;
-    border-radius: 15px;
-    border-left: 4px solid #e8a5c7;
-    margin-bottom: 30px;
+    background: linear-gradient(135deg, rgba(255, 230, 245, 0.8), rgba(255, 240, 248, 0.9));
+    padding: 25px;
+    border-radius: 20px;
+    border: none;
+    margin-bottom: 35px;
+    box-shadow: 0 8px 25px rgba(232, 165, 199, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .preparation-section p {
-    margin-bottom: 10px;
-    line-height: 1.5;
+    margin-bottom: 15px;
+    line-height: 1.7;
+    font-size: 1.1em;
+    font-family: 'Gowun Dodum', sans-serif;
 }
 
 .footer {
     text-align: center;
-    padding: 20px;
-    background: rgba(255, 245, 250, 0.8);
-    border-radius: 15px;
-    border: 2px dashed #e8a5c7;
+    padding: 30px;
+    background: linear-gradient(135deg, rgba(255, 240, 248, 0.9), rgba(255, 235, 244, 0.9));
+    border-radius: 20px;
+    border: 3px dashed #e8a5c7;
+    font-size: 1.1em;
+    font-family: 'Gowun Dodum', sans-serif;
+    box-shadow: 0 5px 15px rgba(232, 165, 199, 0.2);
 }
 
 .thanks {
-    font-size: 1.2em;
-    font-weight: bold;
+    font-family: 'Gamja Flower', 'Jua', cursive;
+    font-size: 1.6em;
+    font-weight: 400;
     color: #d63384;
-    margin-top: 10px;
+    margin-top: 15px;
+    text-shadow: 1px 1px 3px rgba(214, 51, 132, 0.3);
 }
 
 .rabbit-footer {
@@ -289,8 +342,9 @@ body {
 }
 
 .hop-rabbit {
-    font-size: 1.5em;
+    font-size: 1.8em;
     animation: hopAnimation 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 2px 4px rgba(232, 165, 199, 0.3));
 }
 
 .hop-rabbit:nth-child(1) {
@@ -343,39 +397,83 @@ body {
     100% { transform: rotate(360deg); }
 }
 
+@keyframes gameGuidePulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 182, 217, 0.4);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 8px rgba(255, 182, 217, 0.2);
+    }
+}
+
+@keyframes gameIconBounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-8px);
+    }
+    60% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes rabbitCelebration {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.3) rotate(180deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.3) rotate(360deg) translateY(-40px);
+        opacity: 0;
+    }
+}
+
+@keyframes rabbitBounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-15px) scale(1.1); }
+}
+
 @media (max-width: 768px) {
     body {
         padding: 10px;
+        font-size: 16px;
     }
     
     .invitation-container {
         margin: 5px;
-        border-radius: 15px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border-radius: 25px;
+        max-width: 100%;
     }
     
     .header {
-        padding: 20px 10px;
+        padding: 30px 20px;
     }
     
     .title {
-        font-size: 1.3em;
+        font-size: 1.8em;
         line-height: 1.3;
-        padding: 0 5px;
+        padding: 0 10px;
     }
     
-    .rabbit-decorations {
-        gap: 15px;
-        font-size: 1.5em;
+    .main-rabbit {
+        font-size: 3.2em;
+        margin-bottom: 15px;
     }
     
     .content {
-        padding: 20px 15px;
+        padding: 30px 25px;
     }
     
     .greeting {
-        font-size: 1em;
-        margin-bottom: 20px;
+        font-size: 1.2em;
+        margin-bottom: 30px;
     }
     
     .plan-timeline {
@@ -385,17 +483,17 @@ body {
     }
     
     .plan-item {
-        padding: 15px 12px;
-        border-radius: 12px;
+        padding: 18px 15px;
+        border-radius: 18px;
         flex-direction: row;
         align-items: center;
     }
     
     .plan-number {
-        width: 28px;
-        height: 28px;
-        font-size: 0.9em;
-        margin-right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 1.1em;
+        margin-right: 15px;
         flex-shrink: 0;
     }
     
@@ -406,40 +504,40 @@ body {
     }
     
     .plan-icon {
-        font-size: 1.8em;
+        font-size: 2em;
         margin-right: 0;
-        margin-bottom: 5px;
+        margin-bottom: 8px;
         align-self: center;
     }
     
     .plan-text {
-        font-size: 0.95em;
+        font-size: 1.1em;
         text-align: center;
         width: 100%;
     }
     
     .detail-item {
         flex-direction: row;
-        align-items: flex-start;
-        text-align: left;
-        padding: 12px;
-        margin-bottom: 15px;
+        align-items: center;
+        text-align: left;  
+        padding: 18px 15px;
+        margin-bottom: 20px;
     }
     
     .icon {
-        margin-right: 10px;
+        margin-right: 15px;
         margin-bottom: 0;
-        font-size: 1.3em;
+        font-size: 1.6em;
         flex-shrink: 0;
     }
     
     .detail-content {
-        font-size: 0.95em;
+        font-size: 1.05em;
     }
     
     .section-title {
-        font-size: 1.2em;
-        margin-bottom: 12px;
+        font-size: 1.5em;
+        margin-bottom: 20px;
     }
     
     .preparation-section {
@@ -484,75 +582,78 @@ body {
 
 @media (max-width: 480px) {
     body {
-        padding: 5px;
+        padding: 8px;
+        font-size: 15px;
     }
     
     .invitation-container {
         margin: 0;
-        border-radius: 12px;
+        border-radius: 20px;
     }
     
     .header {
-        padding: 15px 8px;
+        padding: 25px 15px;
     }
     
     .title {
-        font-size: 1.1em;
+        font-size: 1.4em;
         line-height: 1.2;
     }
     
-    .rabbit-decorations {
-        gap: 10px;
-        font-size: 1.3em;
+    .main-rabbit {
+        font-size: 2.8em;
+        margin-bottom: 12px;
     }
     
     .content {
-        padding: 15px 10px;
+        padding: 25px 18px;
     }
     
     .greeting {
-        font-size: 0.9em;
-        margin-bottom: 15px;
+        font-size: 1.1em;
+        margin-bottom: 25px;
     }
     
     .plan-item {
-        padding: 12px 8px;
+        padding: 16px 12px;
         flex-direction: column;
         text-align: center;
     }
     
     .plan-content {
         align-items: center;
-        margin-top: 8px;
+        margin-top: 10px;
     }
     
     .plan-icon {
-        font-size: 1.5em;
-        margin-bottom: 3px;
-    }
-    
-    .plan-text {
-        font-size: 0.85em;
-    }
-    
-    .plan-number {
-        width: 25px;
-        height: 25px;
-        font-size: 0.8em;
-        margin-right: 0;
+        font-size: 1.8em;
         margin-bottom: 5px;
     }
     
+    .plan-text {
+        font-size: 1em;
+    }
+    
+    .plan-number {
+        width: 30px;
+        height: 30px;
+        font-size: 1em;
+        margin-right: 0;
+        margin-bottom: 8px;
+    }
+    
     .detail-item {
-        padding: 10px;
-        flex-direction: column;
-        text-align: center;
+        padding: 15px 12px;
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
     }
     
     .icon {
-        margin-right: 0;
-        margin-bottom: 8px;
-        font-size: 1.2em;
+        margin-right: 12px;
+        margin-bottom: 0;
+        font-size: 1.4em;
+        flex-shrink: 0;
     }
     
     .detail-content {
