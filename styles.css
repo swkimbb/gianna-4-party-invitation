@@ -1,0 +1,569 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ffe8f0, #ffebf4, #fff0f6, #fff5f8);
+    min-height: 100vh;
+    padding: 20px;
+    animation: backgroundShift 10s ease-in-out infinite alternate;
+    position: relative;
+}
+
+@keyframes backgroundShift {
+    0% { background: linear-gradient(135deg, #ffe8f0, #ffebf4, #fff0f6, #fff5f8); }
+    100% { background: linear-gradient(135deg, #ffebf4, #fff0f6, #fff5f8, #ffe8f0); }
+}
+
+.invitation-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    border: 3px solid #e8a5c7;
+}
+
+.header {
+    background: linear-gradient(135deg, #ffb6d9, #ffc7e0);
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+}
+
+.rabbit-decorations {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 2em;
+}
+
+.rabbit-ears {
+    animation: rabbitHop 2s ease-in-out infinite;
+}
+
+.carrot {
+    animation: carrotWiggle 1.5s ease-in-out infinite;
+}
+
+.rabbit-ears:first-child {
+    animation-delay: -0.5s;
+}
+
+.rabbit-ears:last-child {
+    animation-delay: -1s;
+}
+
+.carrot:first-child {
+    animation-delay: -0.3s;
+}
+
+.carrot:last-child {
+    animation-delay: -0.8s;
+}
+
+@keyframes rabbitHop {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+@keyframes carrotWiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(3deg); }
+    75% { transform: rotate(-3deg); }
+}
+
+.title {
+    font-size: 1.8em;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 15px 0;
+    animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    0% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); }
+    100% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.5); }
+}
+
+.content {
+    padding: 30px;
+}
+
+.greeting {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #444;
+}
+
+.details-section {
+    margin-bottom: 30px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 240, 248, 0.7);
+    border-radius: 10px;
+    border-left: 4px solid #e8a5c7;
+}
+
+.icon {
+    font-size: 1.5em;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.detail-content {
+    flex: 1;
+    line-height: 1.5;
+}
+
+.map-link {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.map-link:hover {
+    text-decoration: underline;
+    color: #004499;
+}
+
+.small-text {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.section-title {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #d63384;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.plan-section {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.plan-timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.plan-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: linear-gradient(135deg, #ffe8f5, #fff0f8);
+    border-radius: 15px;
+    padding: 15px 20px;
+    border: 2px solid #e8a5c7;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.plan-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.plan-number {
+    background: linear-gradient(135deg, #e8a5c7, #ffb6d9);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-right: 15px;
+    flex-shrink: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.plan-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.plan-icon {
+    font-size: 1.8em;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.plan-text {
+    font-weight: bold;
+    color: #b02a5b;
+    font-size: 1.1em;
+    line-height: 1.3;
+}
+
+.plan-connector {
+    width: 3px;
+    height: 20px;
+    background: linear-gradient(to bottom, #e8a5c7, #ffb6d9);
+    border-radius: 2px;
+    position: relative;
+}
+
+.plan-connector::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: #e8a5c7;
+    border-radius: 50%;
+    animation: connectorPulse 2s infinite;
+}
+
+@keyframes connectorPulse {
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1); 
+        opacity: 1;
+    }
+    50% { 
+        transform: translate(-50%, -50%) scale(1.3); 
+        opacity: 0.7;
+    }
+}
+
+.preparation-section {
+    background: rgba(255, 230, 245, 0.7);
+    padding: 20px;
+    border-radius: 15px;
+    border-left: 4px solid #e8a5c7;
+    margin-bottom: 30px;
+}
+
+.preparation-section p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 245, 250, 0.8);
+    border-radius: 15px;
+    border: 2px dashed #e8a5c7;
+}
+
+.thanks {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #d63384;
+    margin-top: 10px;
+}
+
+.rabbit-footer {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.hop-rabbit {
+    font-size: 1.5em;
+    animation: hopAnimation 1.5s ease-in-out infinite;
+}
+
+.hop-rabbit:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.hop-rabbit:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.hop-rabbit:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+@keyframes hopAnimation {
+    0%, 70%, 100% { 
+        transform: translateY(0) scale(1); 
+    }
+    35% { 
+        transform: translateY(-10px) scale(1.1); 
+    }
+}
+
+.birthday-animation {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.birthday-rabbit {
+    font-size: 2em;
+    animation: bounce 2s infinite;
+}
+
+.birthday-carrot {
+    font-size: 1.5em;
+    animation: spin 3s linear infinite;
+    margin-left: 10px;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-20px); }
+    60% { transform: translateY(-10px); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .invitation-container {
+        margin: 5px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header {
+        padding: 20px 10px;
+    }
+    
+    .title {
+        font-size: 1.3em;
+        line-height: 1.3;
+        padding: 0 5px;
+    }
+    
+    .rabbit-decorations {
+        gap: 15px;
+        font-size: 1.5em;
+    }
+    
+    .content {
+        padding: 20px 15px;
+    }
+    
+    .greeting {
+        font-size: 1em;
+        margin-bottom: 20px;
+    }
+    
+    .plan-timeline {
+        max-width: 100%;
+        padding: 0 5px;
+        gap: 10px;
+    }
+    
+    .plan-item {
+        padding: 15px 12px;
+        border-radius: 12px;
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .plan-number {
+        width: 28px;
+        height: 28px;
+        font-size: 0.9em;
+        margin-right: 10px;
+        flex-shrink: 0;
+    }
+    
+    .plan-content {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    
+    .plan-icon {
+        font-size: 1.8em;
+        margin-right: 0;
+        margin-bottom: 5px;
+        align-self: center;
+    }
+    
+    .plan-text {
+        font-size: 0.95em;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .detail-item {
+        flex-direction: row;
+        align-items: flex-start;
+        text-align: left;
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .icon {
+        margin-right: 10px;
+        margin-bottom: 0;
+        font-size: 1.3em;
+        flex-shrink: 0;
+    }
+    
+    .detail-content {
+        font-size: 0.95em;
+    }
+    
+    .section-title {
+        font-size: 1.2em;
+        margin-bottom: 12px;
+    }
+    
+    .preparation-section {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .preparation-section p {
+        font-size: 0.95em;
+    }
+    
+    .footer {
+        padding: 15px;
+        font-size: 0.95em;
+    }
+    
+    .thanks {
+        font-size: 1.1em;
+    }
+    
+    .birthday-animation {
+        top: 5px;
+        right: 5px;
+    }
+    
+    .birthday-rabbit {
+        font-size: 1.5em;
+    }
+    
+    .birthday-carrot {
+        font-size: 1.2em;
+    }
+    
+    .rabbit-footer {
+        gap: 15px;
+    }
+    
+    .hop-rabbit {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+    
+    .invitation-container {
+        margin: 0;
+        border-radius: 12px;
+    }
+    
+    .header {
+        padding: 15px 8px;
+    }
+    
+    .title {
+        font-size: 1.1em;
+        line-height: 1.2;
+    }
+    
+    .rabbit-decorations {
+        gap: 10px;
+        font-size: 1.3em;
+    }
+    
+    .content {
+        padding: 15px 10px;
+    }
+    
+    .greeting {
+        font-size: 0.9em;
+        margin-bottom: 15px;
+    }
+    
+    .plan-item {
+        padding: 12px 8px;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .plan-content {
+        align-items: center;
+        margin-top: 8px;
+    }
+    
+    .plan-icon {
+        font-size: 1.5em;
+        margin-bottom: 3px;
+    }
+    
+    .plan-text {
+        font-size: 0.85em;
+    }
+    
+    .plan-number {
+        width: 25px;
+        height: 25px;
+        font-size: 0.8em;
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    .detail-item {
+        padding: 10px;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .icon {
+        margin-right: 0;
+        margin-bottom: 8px;
+        font-size: 1.2em;
+    }
+    
+    .detail-content {
+        font-size: 0.9em;
+    }
+    
+    .section-title {
+        font-size: 1.1em;
+    }
+    
+    .small-text {
+        font-size: 0.8em;
+    }
+}
