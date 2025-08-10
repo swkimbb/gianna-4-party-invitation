@@ -314,6 +314,63 @@ body {
     font-family: 'Gowun Dodum', sans-serif;
 }
 
+.photo-album-section {
+    background: linear-gradient(135deg, rgba(255, 230, 245, 0.8), rgba(255, 240, 248, 0.9));
+    padding: 30px 25px;
+    border-radius: 20px;
+    border: none;
+    margin-bottom: 35px;
+    box-shadow: 0 8px 25px rgba(232, 165, 199, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+
+.photo-album-section p {
+    margin-bottom: 25px;
+    line-height: 1.7;
+    font-size: 1.2em;
+    font-family: 'Gowun Dodum', sans-serif;
+    color: #555;
+}
+
+.album-link-container {
+    margin-top: 20px;
+}
+
+.album-link {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff91c7, #ffb3d4, #ffd4e7);
+    color: white;
+    text-decoration: none;
+    padding: 20px 40px;
+    border-radius: 50px;
+    font-family: 'Gamja Flower', 'Jua', cursive;
+    font-size: 1.4em;
+    font-weight: 400;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 20px rgba(232, 165, 199, 0.4);
+    transition: all 0.3s ease;
+    animation: linkPulse 2s ease-in-out infinite;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.album-link:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(232, 165, 199, 0.6);
+    background: linear-gradient(135deg, #e8a5c7, #ff91c7, #ffb3d4);
+    animation-play-state: paused;
+}
+
+@keyframes linkPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 8px 20px rgba(232, 165, 199, 0.4);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 10px 25px rgba(232, 165, 199, 0.5);
+    }
+}
+
 .footer {
     text-align: center;
     padding: 30px;
@@ -549,6 +606,21 @@ body {
         font-size: 0.95em;
     }
     
+    .photo-album-section {
+        padding: 20px 15px;
+        margin-bottom: 25px;
+    }
+    
+    .photo-album-section p {
+        font-size: 1.1em;
+        margin-bottom: 20px;
+    }
+    
+    .album-link {
+        padding: 18px 30px;
+        font-size: 1.2em;
+    }
+    
     .footer {
         padding: 15px;
         font-size: 0.95em;
@@ -666,5 +738,20 @@ body {
     
     .small-text {
         font-size: 0.8em;
+    }
+    
+    .photo-album-section {
+        padding: 18px 12px;
+        margin-bottom: 20px;
+    }
+    
+    .photo-album-section p {
+        font-size: 1em;
+        margin-bottom: 18px;
+    }
+    
+    .album-link {
+        padding: 15px 25px;
+        font-size: 1.1em;
     }
 }
